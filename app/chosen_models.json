@@ -1,0 +1,6 @@
+{
+  "any": "lr",
+  "surgical": "lr",
+  "medical": "lgbm",
+  "readmit": "xgb"
+}

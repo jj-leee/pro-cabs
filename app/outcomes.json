@@ -1,0 +1,6 @@
+{
+  "Any Complication": "any",
+  "Surgical Complication (SSI/dehiscence)": "surgical",
+  "Medical Complication": "medical",
+  "Unplanned Readmission": "readmit"
+}
