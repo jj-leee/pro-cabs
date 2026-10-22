@@ -27,9 +27,9 @@ def main():
 
     st.title("PRO-CABS: Postoperative Risk Outcomes after Cosmetic Abdominoplasty "
              "and Breast Surgery", anchor=False)
-    st.caption("Estimates 30-day complication risk after cosmetic breast surgery, "
-               "abdominoplasty, or both, from preoperative patient and operative "
-               "factors. For research and clinical decision support only.")
+    st.caption("Estimates the risk of complications in the 30 days after cosmetic "
+               "breast surgery, abdominoplasty, or a combined operation. For research "
+               "and clinical decision support only.")
 
     input_df, has_procedure = display.get_input_data()
 

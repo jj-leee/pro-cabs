@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-This project implements Logistic Regression, LightGBM, XGBoost, Neural Network, and Stacked Generalization models to predict 30-day postoperative complications in women undergoing cosmetic breast surgery, abdominoplasty, or both combined in the American College of Surgeons National Surgical Quality Improvement Program (ACS-NSQIP) dataset.
+This project implements Logistic Regression, LightGBM, XGBoost, Neural Network, and Stacked Generalization models to predict 30-day postoperative complications in women undergoing cosmetic breast surgery, abdominoplasty, or a combined operation in the American College of Surgeons National Surgical Quality Improvement Program (ACS-NSQIP) dataset.
 
 **Primary outcomes:**
 - Any complication (surgical or medical)

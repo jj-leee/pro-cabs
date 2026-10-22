@@ -63,6 +63,9 @@ CSS = """
 .sec-title {font-size: 1.05rem; font-weight: 600; margin: 0 0 0.35rem 0;}
 .sub-label {font-size: 0.875rem; font-weight: 600; color: #4b5563; margin: 0.6rem 0 0.1rem 0;}
 .card-label {font-size: 0.875rem; color: #4b5563; line-height: 1.3; min-height: 2.6em;}
+.calc-label {font-size: 0.875rem; line-height: 1.6; margin-bottom: 0.25rem;}
+.calc-value {font-size: 1rem; font-weight: 600; padding: 0.4rem 0 0.1rem 0;}
+.calc-note {font-size: 0.75rem; color: #6b7280;}
 div.risk-value {font-size: 2rem; font-weight: 600; line-height: 1.15; margin: 0.15rem 0 0.35rem 0;}
 .tier-scale {display: flex; gap: 4px; margin: 0.4rem 0 0.9rem 0;}
 .tier {flex: 1; border-radius: 6px; padding: 7px 9px; background: #f3f4f6;
@@ -117,11 +120,12 @@ def sidebar_about():
     with st.sidebar:
         st.subheader("About", anchor=False)
         st.markdown(
-            "PRO-CABS estimates 30-day outcomes after cosmetic breast surgery, "
-            "abdominoplasty, or both combined, in women, from preoperative patient and "
-            "operative factors. Models were developed on ACS-NSQIP data from "
-            "2012–2021 (tuned and calibrated by internal cross-validation) and tested "
-            f"on a held-out 2022–2024 cohort (n = {n_test:,}).")
+            "PRO-CABS estimates a woman's risk of complications in the 30 days after "
+            "cosmetic breast surgery, abdominoplasty, or a combined operation, using "
+            "information available before surgery.")
+        st.markdown(
+            "The models were built from ACS-NSQIP data for 2012–2021 and tested on "
+            f"{n_test:,} later patients (2022–2024).")
         _sub_label("Reading the results")
         st.markdown(
             "- **Estimated risk**: calibrated probability of the outcome within 30 days.\n"
@@ -136,8 +140,8 @@ def sidebar_about():
             st.markdown(
                 "Adult women with a cosmetic indication (ICD-10 Z41.1 / ICD-9 V50.1) "
                 "undergoing cosmetic breast surgery (augmentation, mastopexy, "
-                "reduction, implant removal, capsule surgery), abdominoplasty, or "
-                "both. Liposuction and umbilical hernia repair performed with these "
+                "reduction, implant removal, capsule surgery), abdominoplasty, or a "
+                "combined operation. Liposuction and umbilical hernia repair performed with these "
                 "operations are included; other concurrent operations are not.")
         st.divider()
         st.caption("For research and clinical decision support only. Estimates do not "
@@ -166,8 +170,10 @@ def get_input_data():
         row["weight"] = c[1].number_input("Weight (lb)", 70.0, 450.0, 150.0, 1.0,
                                           format="%.0f", key="wt")
         bmi = 703.0 * row["weight"] / row["height"] ** 2
-        c[2].text_input("BMI (calculated)", f"{bmi:.1f} kg/m²", disabled=True,
-                        key="bmi_display")
+        c[2].markdown(f"<div class='calc-label'>BMI</div>"
+                      f"<div class='calc-value'>{bmi:.1f} kg/m²</div>"
+                      "<div class='calc-note'>Calculated from height and weight</div>",
+                      unsafe_allow_html=True)
 
     with st.container(border=True):
         _section("Health status")
