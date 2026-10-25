@@ -21,20 +21,43 @@ import streamlit as st
 import display_functions as display
 
 
+# Header styles live here (not in display_functions) so a cached module on
+# Streamlit Cloud can never leave the title unstyled.
+HEADER_CSS = """
+<style>
+.pc-header {margin: 0.2rem 0 1.4rem 0; padding-bottom: 1.1rem; border-bottom: 1px solid #e5e7eb;}
+.pc-title {font-size: 3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05;
+           color: #111827; margin: 0;}
+.pc-title .pc-accent {color: #c21615;}
+.pc-name {font-size: 1.3rem; font-weight: 400; color: #374151; margin: 0.45rem 0 0 0;
+          line-height: 1.4;}
+.pc-name u {font-weight: 700; color: #111827; text-decoration-color: #c21615;
+            text-decoration-thickness: 2px; text-underline-offset: 0.16em;}
+.pc-tagline {font-size: 0.95rem; color: #6b7280; margin: 0.55rem 0 0 0; line-height: 1.5;}
+</style>
+"""
+
+
+def header_html():
+    initial = lambda w: f"<u>{w[0]}</u>{w[1:]}"
+    full_name = " ".join([initial("Postoperative"), initial("Risk"), "of", initial("Outcomes"),
+                          "after", initial("Cosmetic"), initial("Abdominoplasty"), "and/or",
+                          initial("Breast"), initial("Surgery")])
+    return (HEADER_CSS
+            + "<div class='pc-header'>"
+            "<div class='pc-title'>PRO-<span class='pc-accent'>CABS</span></div>"
+            f"<div class='pc-name'>{full_name}</div>"
+            "<div class='pc-tagline'>Estimates the risk of complications in the 30 days after "
+            "cosmetic breast surgery, abdominoplasty, or a combined operation. For research "
+            "and clinical decision support only.</div></div>")
+
+
 def main():
     st.set_page_config(page_title="PRO-CABS", page_icon="🏥", layout="wide")
     display.apply_style()
     display.sidebar_about()
 
-    initial = lambda w: f"<u><b>{w[0]}</b></u>{w[1:]}"
-    full_name = " ".join([initial("Postoperative"), initial("Risk"), "of", initial("Outcomes"),
-                          "after", initial("Cosmetic"), initial("Abdominoplasty"), "and/or",
-                          initial("Breast"), initial("Surgery")])
-    st.markdown(f"<div class='app-title'>PRO-CABS: <span class='full-name'>{full_name}"
-                "</span></div>", unsafe_allow_html=True)
-    st.caption("Estimates the risk of complications in the 30 days after cosmetic "
-               "breast surgery, abdominoplasty, or a combined operation. For research "
-               "and clinical decision support only.")
+    st.markdown(header_html(), unsafe_allow_html=True)
 
     input_df, has_procedure = display.get_input_data()
 

@@ -68,9 +68,6 @@ CSS = """
 .calc-note {font-size: 0.75rem; color: #6b7280;}
 div.risk-value {font-size: 2rem; font-weight: 600; line-height: 1.15; margin: 0.15rem 0 0.35rem 0;}
 .tier-scale {display: flex; gap: 4px; margin: 0.4rem 0 0.9rem 0;}
-.app-title {font-size: 2.6rem; font-weight: 700; line-height: 1.2; margin: 0 0 0.6rem 0;}
-.app-title .full-name {font-weight: 400;}
-.app-title .full-name u {font-weight: 700; text-underline-offset: 0.12em;}
 .tier {flex: 1; border-radius: 6px; padding: 7px 9px; background: #f3f4f6;
        color: #4b5563; font-size: 0.78rem; line-height: 1.35;}
 .tier b {display: block; font-size: 0.82rem;}
