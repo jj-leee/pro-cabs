@@ -30,7 +30,7 @@ PRO-CABS builds on the machine learning framework that Matar et al. developed fo
 **Carried over from the framework:**
 - A preprocessing pipeline fit on training data only. It covers iterative imputation, BMI derived from height and weight, scaling, ordinal clipping, and one-hot encoding.
 - Hyperparameter-tuned logistic regression, LightGBM, XGBoost, neural network, and stacked generalization models, each calibrated on a separate validation cohort.
-- Lift-based risk stratification into four log-spaced risk bins. For each outcome, the deployed model is chosen by monotonic lift across the bins.
+- Lift-based risk stratification into risk tiers, with event rates and lift per tier.
 - Patient-level SHAP explanations.
 - The Streamlit interface (`base_app.py`, `display_functions.py`, `utils.py`, `shap_utils.py`) and the keep-awake workflow.
 
@@ -42,7 +42,7 @@ PRO-CABS builds on the machine learning framework that Matar et al. developed fo
 - **Deployment artifacts:** aggregate test-cohort summaries replace per-patient predictions (see [Data Privacy](#data-privacy)).
 
 ## Associated Risk Calculator
-**PRO-CABS** (**P**ostoperative **R**isk **O**utcomes after **C**osmetic **A**bdominoplasty and **B**reast **S**urgery) is a web application that deploys the calibrated model chosen for each of the four primary outcomes (see `app/chosen_models.json`). It stratifies an input patient into one of **Very Low, Low, Moderate, or High** risk bins based on calibrated probability output. The interface can be found [here](https://pro-cabs.streamlit.app/).
+**PRO-CABS** (**P**ostoperative **R**isk of **O**utcomes after **C**osmetic **A**bdominoplasty and/or **B**reast **S**urgery) is a web application that deploys the calibrated model chosen for each of the four primary outcomes (see `app/chosen_models.json`). It places each patient in a **Low, Moderate, or High** risk tier, cut at the 50th and 90th percentiles of predicted risk in the development data, so High means the top 10%. The interface can be found [here](https://pro-cabs.streamlit.app/).
 
 Once all [Installation Steps](#installation) are completed, you can also run the app locally with `.venv/bin/streamlit run app/base_app.py`.
 
@@ -52,7 +52,7 @@ Once all [Installation Steps](#installation) are completed, you can also run the
 - Choose which of the 4 primary outcomes to estimate (all are selected by default), then select **Estimate risk**.
 - Results show a summary card per outcome and a detailed tab for each:
   - **Calibrated risk** probability
-  - **Risk stratification** into one of Very Low, Low, Moderate, or High risk, shown on a tier scale with cut points
+  - **Risk tier**: Low, Moderate, or High, shown on a tier scale with cut points
   - **Observed event rate** among 2022-2024 test-cohort patients in each risk tier
   - **Percentile ranking** of model output relative to the 2022-2024 cohort
   - **Contributing factors** via patient-level SHAP explanation values

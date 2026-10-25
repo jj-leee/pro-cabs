@@ -83,9 +83,11 @@ def load_bin_thresholds(outcome):
 
 
 # ---- risk category / bins / percentile -------------------------------------
-RISK_LABELS = ["Very Low", "Low", "Moderate", "High"]
-RISK_COLORS = ["#0ebd0d", "#ffd401", "#ee9410", "#c21615"]
-RISK_EMOJI = ["🟢", "🟡", "🟠", "🔴"]
+# Three tiers cut at the 50th and 90th percentiles of development-set risk
+# (Low = bottom half, Moderate = 50th-90th, High = top 10%).
+RISK_LABELS = ["Low", "Moderate", "High"]
+RISK_COLORS = ["#0ebd0d", "#ee9410", "#c21615"]
+RISK_EMOJI = ["🟢", "🟠", "🔴"]
 
 
 def get_risk_category(prob, outcome):

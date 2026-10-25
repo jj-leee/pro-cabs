@@ -54,8 +54,8 @@ OUTCOME_DEFS = {
 }
 MODEL_NAMES = {"lgbm": "LightGBM", "xgb": "XGBoost", "lr": "logistic regression"}
 
-TIER_COLORS = ["#2f7d4f", "#b8860b", "#c4621a", "#c21615"]
-TIER_BADGES = ["green", "yellow", "orange", "red"]
+TIER_COLORS = ["#2f7d4f", "#c4621a", "#c21615"]
+TIER_BADGES = ["green", "orange", "red"]
 
 CSS = """
 <style>
@@ -68,6 +68,9 @@ CSS = """
 .calc-note {font-size: 0.75rem; color: #6b7280;}
 div.risk-value {font-size: 2rem; font-weight: 600; line-height: 1.15; margin: 0.15rem 0 0.35rem 0;}
 .tier-scale {display: flex; gap: 4px; margin: 0.4rem 0 0.9rem 0;}
+.app-title {font-size: 2.6rem; font-weight: 700; line-height: 1.2; margin: 0 0 0.6rem 0;}
+.app-title .full-name {font-weight: 400;}
+.app-title .full-name u {font-weight: 700; text-underline-offset: 0.12em;}
 .tier {flex: 1; border-radius: 6px; padding: 7px 9px; background: #f3f4f6;
        color: #4b5563; font-size: 0.78rem; line-height: 1.35;}
 .tier b {display: block; font-size: 0.82rem;}
@@ -129,7 +132,8 @@ def sidebar_about():
         _sub_label("Reading the results")
         st.markdown(
             "- **Estimated risk**: calibrated probability of the outcome within 30 days.\n"
-            "- **Risk tier**: Very Low, Low, Moderate, or High, with the rate observed "
+            "- **Risk tier**: Low (bottom half of predicted risk), Moderate, or High "
+            "(top 10%), with the rate observed "
             "in that tier among 2022–2024 test patients.\n"
             "- **Percentile**: where the estimate falls among 2022–2024 test patients.\n"
             "- **Contributing factors**: how much each input moved this estimate.")
@@ -264,8 +268,9 @@ def _result(label, outcome, input_df):
 
 def _tier_scale(r):
     t = [100 * float(x) for x in r["thr"]]
-    ranges = [f"&lt; {t[0]:.1f}%", f"{t[0]:.1f}–{t[1]:.1f}%",
-              f"{t[1]:.1f}–{t[2]:.1f}%", f"≥ {t[2]:.1f}%"]
+    ranges = ([f"&lt; {t[0]:.1f}%"]
+              + [f"{t[i]:.1f}–{t[i + 1]:.1f}%" for i in range(len(t) - 1)]
+              + [f"≥ {t[-1]:.1f}%"])
     cells = []
     for i, (name, rng) in enumerate(zip(util.RISK_LABELS, ranges)):
         obs = r["rates"][i]

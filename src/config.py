@@ -137,5 +137,11 @@ ALL_MODELS = ["lr", "lgbm", "xgb", "nn", "stack"]
 
 GATING_MIN_HIGH_BIN_EVENTS = 50
 
-BIN_NAMES = ["Very Low", "Low", "Moderate", "High"]
-N_BINS = 4
+# Risk tiers. PRO-PANN uses four log-spaced bins; on the PRO-CABS test set two of
+# the four deployed models were not monotonic across them, and the lowest bin held
+# 14-17 patients for two outcomes. PRO-CABS therefore uses three tiers cut at the
+# 50th and 90th percentiles of DEVELOPMENT-set predicted risk:
+# Low = bottom half, Moderate = 50th-90th, High = top 10%.
+BIN_NAMES = ["Low", "Moderate", "High"]
+N_BINS = 3
+TIER_QUANTILES = (0.50, 0.90)

@@ -7,7 +7,7 @@ URL = "https://pro-cabs.streamlit.app"
 
 
 # A substring is used to stay robust to whitespace/casing quirks in the DOM.
-RENDER_MARKER = "Postoperative Risk Outcomes after Cosmetic Abdominoplasty"
+RENDER_MARKER = "PRO-CABS"
 
 
 def main():

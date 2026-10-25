@@ -3,8 +3,9 @@
 Inputs = the deployed feature set; the planned procedures (abdominoplasty, breast
 procedure types, liposuction, umbilical hernia repair) are user-set checkboxes,
 and the combined abdominoplasty + breast flag is derived from them. Per selected
-outcome the app shows the calibrated 30-day risk, the log-spaced risk category,
-the observed in-category rate from the 2022-2024 test set, the outcome-specific
+outcome the app shows the calibrated 30-day risk, the risk tier (Low / Moderate /
+High: development-set risk percentiles 0-50 / 50-90 / 90-100),
+the observed in-tier rate from the 2022-2024 test set, the outcome-specific
 percentile, and a per-patient SHAP explanation.
 
 Only the four primary outcomes are deployed (any, surgical and medical
@@ -25,8 +26,12 @@ def main():
     display.apply_style()
     display.sidebar_about()
 
-    st.title("PRO-CABS: Postoperative Risk Outcomes after Cosmetic Abdominoplasty "
-             "and Breast Surgery", anchor=False)
+    initial = lambda w: f"<u><b>{w[0]}</b></u>{w[1:]}"
+    full_name = " ".join([initial("Postoperative"), initial("Risk"), "of", initial("Outcomes"),
+                          "after", initial("Cosmetic"), initial("Abdominoplasty"), "and/or",
+                          initial("Breast"), initial("Surgery")])
+    st.markdown(f"<div class='app-title'>PRO-CABS: <span class='full-name'>{full_name}"
+                "</span></div>", unsafe_allow_html=True)
     st.caption("Estimates the risk of complications in the 30 days after cosmetic "
                "breast surgery, abdominoplasty, or a combined operation. For research "
                "and clinical decision support only.")

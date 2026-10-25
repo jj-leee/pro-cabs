@@ -125,7 +125,7 @@ def main():
 
             obs = rates[idx]
             good = (0 <= prob <= 1 and np.isfinite(phi).all() and additive
-                    and 0 <= pct <= 100 and n_pop > 1000 and len(rates) == 4)
+                    and 0 <= pct <= 100 and n_pop > 1000 and len(rates) == 3)
             ok &= good
             top = [str(names[i]) for i in np.argsort(np.abs(phi))[::-1][:3]]
             obs_txt = "   n/a" if obs is None or np.isnan(obs) else f"{obs:8.1%}"
